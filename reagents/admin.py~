@@ -17,13 +17,13 @@ class SolidAdmin(admin.ModelAdmin):
         (None, {'fields': ['name','owner','mw']}),
         ]
         
-class BiologicAdmin(admin.ModelAdmin):
+class SequenceAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None, {'fields': ['name','owner','sequence','form','shape','material']}),
         ]
 
-class SolutionAdmin(admin.ModelAdmin):
+class BiologicAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None, {'fields': ['name','owner']}),
