@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="{% static 'css/reagent-tab.css' %}">
 <link rel="stylesheet" href="{% static 'css/tables.css' %}">
 
 
@@ -57,6 +58,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <button class="w3-bar-item w3-button w3-padding tablinks" onclick="openTab(event,'home')" id="defaultOpen"><i class="fa fa-home fa-fw"></i>  Home</button>
     <button class="w3-bar-item w3-button w3-padding tablinks" onclick="openTab(event,'protocols')"><i class="fa fa-puzzle-piece fa-fw"></i>  Protocols</button>
     <button class="w3-bar-item w3-button w3-padding tablinks" onclick="openTab(event,'samples')"><i class="fa fa-leaf fa-fw"></i>  Samples</button>
+    <button class="w3-bar-item w3-button w3-padding tablinks" onclick="openTab(event,'reagents')"><i class="fa fa-balance-scale fa-fw"></i>  Reagents</button>
     <button class="w3-bar-item w3-button w3-padding tablinks" onclick="openTab(event,'notebook')"><i class="fa fa-sticky-note fa-fw"></i>  Notebook</button>
     <button class="w3-bar-item w3-button w3-padding tablinks" onclick="openTab(event,'schedule')"><i class="fa fa-calendar fa-fw"></i>  Schedule</button>
     <button class="w3-bar-item w3-button w3-padding tablinks" onclick="openTab(event,'history')"><i class="fa fa-history fa-fw"></i>  History</button>
@@ -207,33 +209,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <h5><b><i class="fa fa-puzzle-piece"></i> My Protocols</b></h5>
   </header>
 
-  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-
-    <table id="myTable">
-      <tr class="header">
-        <th style="width:60%;">Name</th>
-        <th style="width:40%;">Category</th>
-      </tr>
-      <tr>
-        <td>Restriction Digest</td>
-        <td>DNA</td>
-      </tr>
-      <tr>
-        <td>PCR Amplification</td>
-        <td>DNA</td>
-      </tr>
-      <tr>
-        <td>Transformation</td>
-        <td>DNA - Cell</td>
-      </tr>
-      <tr>
-        <td>Miniprep</td>
-        <td>DNA - Cell</td>
-      </tr>
-    </table> 
-
 </div>
-
 
 
 
@@ -248,6 +224,52 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </div>
 
 
+
+<!-- REAGENTS -->
+
+<div id="reagents" class="tabcontent">
+
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-balance-scale"></i> My Reagents</b></h5>
+  </header>
+
+  <div class="reagent-tab">
+    <button class="reagent-tablinks" onclick="openReagentTab(event, 'Liquids')">Liquids</button>
+    <button class="reagent-tablinks" onclick="openReagentTab(event, 'Solids')">Solids</button>
+    <button class="reagent-tablinks" onclick="openReagentTab(event, 'Biologics')">Biologics</button>
+    <button class="reagent-tablinks" onclick="openReagentTab(event, 'Solutions')">Solutions</button>
+  </div>
+
+  <!-- Tab content -->
+  <div id="Liquids" class="reagent-tabcontent">
+    <h3>Liquids</h3>
+    {% for liquid in liquids %}
+        <li>{{ biologic.name}}</li>
+    {% endfor %}
+  </div>
+
+  <div id="Solids" class="reagent-tabcontent">
+    <h3>Solids</h3>
+    {% for solid in solids %}
+        <li>{{ biologic.name}}</li>
+    {% endfor %}
+  </div>
+
+  <div id="Biologics" class="reagent-tabcontent">
+    <h3>Biologics</h3>
+    {% for biologic in biologics %}
+        <li>{{ biologic.name}}</li>
+    {% endfor %}
+  </div>
+
+  <div id="Solutions" class="reagent-tabcontent">
+    <h3>Solutions</h3>
+    {% for solution in solutions %}
+        <li>{{ biologic.name}}</li>
+    {% endfor %}
+  </div>
+
+</div>
 
 
 <!-- NOTEBOOK -->
@@ -311,6 +333,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- JavaScript -->
 
 <script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/reagent-tab.js' %}"></script>
 <script src="{% static 'js/tables.js' %}"></script>
 
 
