@@ -1,4 +1,6 @@
 {% load static %}
+{% load render_table from django_tables2 %}
+
 
 <!DOCTYPE html>
 <html>
@@ -243,30 +245,22 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <!-- Tab content -->
   <div id="Liquids" class="reagent-tabcontent">
     <h3>Liquids</h3>
-    {% for liquid in liquids %}
-        <li>{{ biologic.name}}</li>
-    {% endfor %}
+    {% render_table liquids %}
   </div>
 
   <div id="Solids" class="reagent-tabcontent">
     <h3>Solids</h3>
-    {% for solid in solids %}
-        <li>{{ biologic.name}}</li>
-    {% endfor %}
+    {% render_table solids %}
   </div>
 
   <div id="Biologics" class="reagent-tabcontent">
     <h3>Biologics</h3>
-    {% for biologic in biologics %}
-        <li>{{ biologic.name}}</li>
-    {% endfor %}
+    {% render_table biologics %}
   </div>
 
   <div id="Solutions" class="reagent-tabcontent">
     <h3>Solutions</h3>
-    {% for solution in solutions %}
-        <li>{{ biologic.name}}</li>
-    {% endfor %}
+    {% render_table solutions %}
   </div>
 
 </div>
