@@ -245,22 +245,25 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <!-- Tab content -->
   <div id="Liquids" class="reagent-tabcontent">
     <h3>Liquids</h3>
-    {% render_table liquids %}
+    {% render_table table_liquids %}
   </div>
 
   <div id="Solids" class="reagent-tabcontent">
     <h3>Solids</h3>
-    {% render_table solids %}
+    {% render_table table_solids %}
   </div>
 
   <div id="Biologics" class="reagent-tabcontent">
     <h3>Biologics</h3>
-    {% render_table biologics %}
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    {% render_table table_biologics %}
   </div>
 
   <div id="Solutions" class="reagent-tabcontent">
     <h3>Solutions</h3>
-    {% render_table solutions %}
+    {% render_table table_solutions %}
   </div>
 
 </div>
