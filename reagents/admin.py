@@ -23,11 +23,19 @@ class BiologicAdmin(admin.ModelAdmin):
         (None, {'fields': ['name','owner','sequence','form','shape','material']}),
         ]
 
+
+# may not be best expression here
+class TermInlineAdmin(admin.TabularInline):
+    model = Solution.liquids.through
+
+
 class SolutionAdmin(admin.ModelAdmin):
 
     fieldsets = [
         (None, {'fields': ['name','owner']}),
         ]
+
+    inlines = (TermInlineAdmin,) 
         
 
 admin.site.register(Liquid, 	  LiquidAdmin)

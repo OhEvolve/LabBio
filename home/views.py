@@ -19,11 +19,6 @@ class OverView(generic.ListView):
         context['solids'] = Solid.objects.all()
         context['biologics'] = Biologic.objects.all()
         context['solutions'] = Solution.objects.all()
-        # generate content tables
-        context['table_liquids'] =  LiquidTable(Liquid.objects.all(), prefix="1-")
-        context['table_solids'] =  SolidTable(Solid.objects.all(), prefix="2-")
-        context['table_biologics'] =  BiologicTable(Biologic.objects.all(), prefix="3-")
-        context['table_solutions'] =  SolutionTable(Solution.objects.all(), prefix="4-")
         # return modified context
         return context
 
