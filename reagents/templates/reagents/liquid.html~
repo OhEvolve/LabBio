@@ -1,0 +1,12 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<title>{{ liquid.name}}</title>
+
+<link rel="stylesheet" href="{% static 'css/font-Raleway.css' %}">
+
+<h1> Liquid </h1>
+Name: {{ liquid.name}}
+Owner: {{ liquid.owner}}

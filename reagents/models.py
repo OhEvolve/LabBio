@@ -25,29 +25,49 @@ SOLUTION_CONTENT_CHOICES = ((" liquid "," liquid "),
                             ("  solid ","  solid "),
                             ("biologic","biologic"))
 
+VOLUME_UNITS_CHOICES = (("uL","uL"),
+                        ("mL","mL"),
+                        (" L"," L"))
+
+
+MASS_UNITS_CHOICES = (("ng/L","ng/L"),
+                      ("ug/L","ug/L"),
+                      ("mg/L","mg/L"),
+                      (" g/L"," g/L"),
+                      (" nM "," nM "),
+                      (" uM "," uM "),
+                      (" mM "," mM "),
+                      ("  M ","  M "))
+
+MW_UNITS_CHOICES = (("kg/mol","kg/mol"),
+                    (" g/mol"," g/mol"))
 
 
 class Matter(models.Model):
-	""" Matter reference object (base class) """
-	name = models.CharField(max_length=255)
-	owner = models.CharField(max_length=255,blank=True)
-    
-	def __str__(self):
-		return '{} - {}'.format(type(self).__name__,self.name)
+
+    """ Matter reference object (base class) """
+
+    name = models.CharField(max_length=255)
+    owner = models.CharField(max_length=255,blank=True)
+
+    def __str__(self):
+            #return '{} - {}'.format(type(self).__name__,self.name)
+            return self.name
 
 class Liquid(Matter):
 	
-	""" Liquid reference object """
-	
-	pass
+    """ Liquid reference object """
+    
+    pass
 	
 	
 class Solid(Matter):
 	
-	""" Solid reference object """
-	
-	mw = models.CharField(max_length=20)
-	
+    """ Solid reference object """
+    
+    mw       = models.FloatField(default=0,verbose_name='Molecular weight')
+    mw_units = models.CharField(max_length=6,choices=MW_UNITS_CHOICES,default=' g/mol',verbose_name='Units')
+    
 	
 class Biologic(Matter):
    	
@@ -61,20 +81,29 @@ class Biologic(Matter):
 
                   		   
 class Solution(Matter):
-        
-    """ Liquid reference object """
 
-    #liquids   = models.ForeignKey(Liquid,  on_delete=models.SET_NULL, null=True)
-    liquids   = models.ManyToManyField(Liquid,through='Contains')
+    liquids   = models.ManyToManyField(Liquid,through='LiquidContent',symmetrical=False)
+    solids    = models.ManyToManyField(Solid,through='SolidContent',symmetrical=False)
+    biologics = models.ManyToManyField(Biologic,through='BiologicContent',symmetrical=False)
 
-    #solids    = models.ForeignKey(Solid,   on_delete=models.SET_NULL, null=True)
-    #biologics = models.ForeignKey(Biologic,on_delete=models.SET_NULL, null=True)
-    #solutions = models.ForeignKey("self",  on_delete=models.SET_NULL, null=True)
-                  		   
+""" Through object definition """
 
-class Contains(models.Model):
-    reagent  = models.ForeignKey(Liquid,on_delete=models.DO_NOTHING) # may be wrong on_delete behavior
-    solution = models.ForeignKey(Solution,on_delete=models.DO_NOTHING) # may be wrong on_delete behavior
-    volume = models.CharField(max_length=16)
-                  		   
+class LiquidContent(models.Model):
+    reagent  = models.ForeignKey(Liquid,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    solution = models.ForeignKey(Solution,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    volume       = models.FloatField(default=1)
+    volume_units = models.CharField(max_length=2,choices=VOLUME_UNITS_CHOICES,default=' L')
+
+class SolidContent(models.Model):
+    reagent  = models.ForeignKey(Solid,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    solution = models.ForeignKey(Solution,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    mass       = models.FloatField(default=0)
+    mass_units = models.CharField(max_length=4,choices=MASS_UNITS_CHOICES,default=' g/L')
             
+class BiologicContent(models.Model):
+    reagent  = models.ForeignKey(Biologic,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    solution = models.ForeignKey(Solution,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    mass       = models.FloatField(default=0)
+    mass_units = models.CharField(max_length=4,choices=MASS_UNITS_CHOICES,default=' g/L')
+
+

@@ -1,0 +1,12 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<title>{{ biologic.name}}</title>
+
+<link rel="stylesheet" href="{% static 'css/font-Raleway.css' %}">
+
+<h1> Biologic </h1>
+Name: {{ biologic.name}}
+Owner: {{ biologic.owner}}

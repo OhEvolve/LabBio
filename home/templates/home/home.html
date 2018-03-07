@@ -29,6 +29,7 @@
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
+
 <body class="w3-light-grey">
 
 
@@ -259,7 +260,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <tbody>
             {% for liquid in liquids %}
             <tr>
-                <td>{{ liquid.name }}</td>
+                <td><a href="reagents/liquid/{{ liquid.id }}" target="_blank">{{ liquid.name }}</a></td>
                 <td>{{ liquid.owner }}</td>
             </tr>
             {% endfor %}
@@ -281,9 +282,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <tbody>
             {% for solid in solids %}
             <tr>
-                <td>{{ solid.name }}</td>
+                <td><a href="reagents/solid/{{ solid.id }}" target="_blank">{{ solid.name }}</a></td>
                 <td>{{ solid.owner }}</td>
-                <td>{{ solid.mw }}</td>
+                <td>{{ solid.mw }} {{ solid.mw_units }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -298,7 +299,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <thead>
             <tr>
                 <th>Name</th>
-                
                 <th>Owner</th>
                 <th>Form</th>
                 <th>Material</th>
@@ -308,7 +308,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <tbody>
             {% for biologic in biologics %}
             <tr>
-                <td><a href="/reagents/{{ biologic.id }}" target="_blank">{{ biologic.name }}</a></td>
+                <td><a href="reagents/biologic/{{ biologic.id }}" target="_blank">{{ biologic.name }}</a></td>
                 <td>{{ biologic.owner }}</td>
                 <td>{{ biologic.form}}</td>
                 <td>{{ biologic.material}}</td>
@@ -328,13 +328,19 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
             <tr>
                 <th>Name</th>
                 <th>Owner</th>
+                <th>Liquids</th>
+                <th>Solids</th>
+                <th>Biologics</th>
             </tr>
         </thead>
         <tbody>
             {% for solution in solutions %}
             <tr>
-                <td>{{ solution.name }}</td>
+                <td><a href="reagents/solution/{{ solution.id }}" target="_blank">{{ solution.name }}</a></td>
                 <td>{{ solution.owner }}</td>
+                <td>{{ solution.liquids.all|join:", " }}</td>
+                <td>{{ solution.solids.all|join:", " }}</td>
+                <td>{{ solution.biologics.all|join:", " }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -415,9 +421,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <!-- JavaScript Initialization -->
 
-<script type="text/javascript" >
+<script type="text/javascript">
 $(document).ready(function(){
-    $('table.display').DataTable();
+    $('table.display').DataTable({
+        "columnDefs": [
+        {"className": "dt-center", "targets": "_all"}
+      ]
+    });
 });
 </script>
 

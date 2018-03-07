@@ -1,0 +1,50 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<title>{{ solution.name}}</title>
+
+
+<head>
+	<link rel="stylesheet" href="{% static 'css/font-Raleway.css' %}">
+</head>
+
+
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+
+
+<h1> {{ solution.name}} </h1>
+<div> Owner: {{ solution.owner}} </div>
+
+<hr><hr>
+
+<h2>Liquid Contents</h2>
+{% for liquid in solution.liquids.all %}
+	<h3> {{ liquid.name }} </h3>
+	<div> Owner: {{ liquid.owner }} </div>
+	<hr>
+{% endfor %}
+
+<hr>
+
+<h2>Solid Contents</h2>
+{% for solid in solution.solids.all %}
+	<h3> {{ solid.name }} </h3>
+	<div> Owner: {{ solid.owner }} </div>
+	<div> Molecular Weight: {{ solid.mw }} {{ solid.mw_units }}</div>
+	<hr>
+{% endfor %}
+
+<hr>
+
+<h2>Biologic Contents</h2>
+{% for biologic in solution.biologics.all %}
+	<h3> {{ biologic.name }} </h3>
+	<div> Owner: {{ biologic.owner }} </div>
+	<hr>
+{% endfor %}
+
+<hr><hr>
