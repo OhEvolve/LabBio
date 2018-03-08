@@ -14,7 +14,7 @@ class StepInline(admin.TabularInline):
         }),
         (None, {
             'fields': (('start_date', 'end_date'),),
-            'classes': ('AAAAAA',)
+            'classes': ('abcdefg',)
         })
     )
 
