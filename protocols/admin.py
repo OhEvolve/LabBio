@@ -45,3 +45,4 @@ class ProtocolAdmin(admin.ModelAdmin):
         js = ('protocols/js/base.js',)
 
 admin.site.register(Protocol,ProtocolAdmin)
+
