@@ -7,6 +7,8 @@ from protocols.forms import ProtocolForm,StepForm
 
 class StepInline(admin.TabularInline):
 
+    """ """ 
+
     fieldsets = (
         ('Date Range', {
             'fields': ('date_range',),
@@ -14,7 +16,7 @@ class StepInline(admin.TabularInline):
         }),
         (None, {
             'fields': (('start_date', 'end_date'),),
-            'classes': ('abcdefg',)
+            'classes': ('AAAAAA',)
         })
     )
 

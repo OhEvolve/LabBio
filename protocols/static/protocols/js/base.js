@@ -4,8 +4,10 @@
         var selectField = $('#id_date_range'),
             verified = $('.abcdefg');
 
+
         function toggleVerified(value) {
             if (value === 'Custom') {
+                console.log("A");
                 verified.show();
             } else {
                 verified.hide();
