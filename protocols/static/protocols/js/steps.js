@@ -37,7 +37,7 @@ String.prototype.format = function () {
         
 
         // show/hide on load based on pervious value of selectField
-        for (i = 0; i < fixed_total; i++) {
+        for (i = 0; i < total.val(); i++) {
             toggleFields(myfields,i,entryTemplate,$(stepTemplate.format(i)).val())
         }
 
@@ -49,16 +49,20 @@ String.prototype.format = function () {
         }
 
         // show/hide on change
-        for (i = 0; i < fixed_total; i++) {
+        for (i = 0; i < total.val(); i++) {
             $(stepTemplate.format(i)).change(callback(myfields,entryTemplate,stepTemplate,i));
         };
 
-        total.format('val()',function() {
-            console.log("Changes!");
+        $(document).on('formset:added', function() {
+            var rows = total.val() - 1
+            toggleFields(myfields,rows,entryTemplate,$(stepTemplate.format(rows)).val());
+            $(stepTemplate.format(rows)).change(callback(myfields,entryTemplate,stepTemplate,rows));
         });
+
     });
 
 })(django.jQuery);
+
 
 
 

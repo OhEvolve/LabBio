@@ -9,20 +9,14 @@ class StepInline(admin.TabularInline):
 
     """ """ 
 
-    fieldsets = (
-        ('Date Range', {
-            'fields': ('date_range',),
-            'classes': ('predefined',)
-        }),
-        (None, {
-            'fields': (('start_date', 'end_date'),),
-            'classes': ('AAAAAA',)
-        })
-    )
+    fields = ('date_range','start_date','end_date')
 
     form = StepForm
     model = Step
     extra = 3
+
+    class Meta:
+        exclude = ('start_date','end_date')
 
     class Media:
         js = ('protocols/js/steps.js',)

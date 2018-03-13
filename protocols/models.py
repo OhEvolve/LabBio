@@ -8,6 +8,7 @@ from django.db import models
 class Protocol(models.Model):
 
     CHOICES = (
+        ('','-----'),
         ('Today', 'Today'),
         ('Yesterday', 'Yesterday'),
         ('Last 7 Days', 'Last 7 Days'),
@@ -19,7 +20,7 @@ class Protocol(models.Model):
         ('All Time', 'All Time'),
         ('Custom', 'Custom'))
 
-    date_range = models.CharField(max_length=15,default='')
+    date_range = models.CharField(max_length=15,default='',null=True)
     start_date = models.DateField(default=date.today)
     end_date = models.DateField(default=date.today)
 
@@ -30,6 +31,7 @@ class Step(models.Model):
     name = models.CharField(max_length=255,default='MyProtocol')
 
     CHOICES = (
+        ('','-----'),
         ('Today', 'Today'),
         ('Yesterday', 'Yesterday'),
         ('Last 7 Days', 'Last 7 Days'),
@@ -41,7 +43,7 @@ class Step(models.Model):
         ('All Time', 'All Time'),
         ('Custom', 'Custom'))
 
-    date_range = models.CharField(max_length=15,default='')
+    date_range = models.CharField(max_length=15,default='',null=True)
     start_date = models.DateField(default=date.today)
     end_date = models.DateField(default=date.today)
 
