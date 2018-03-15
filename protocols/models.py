@@ -19,6 +19,9 @@ VOLUME_UNITS_CHOICES = (("uL","uL"),
                         ("mL","mL"),
                         (" L"," L"))
 
+DECANT_ACTION_CHOICES = (('Discard','Discard'),
+                         ('  Save ','Save'))
+
 class Protocol(models.Model):
 
     CHOICES = (
@@ -73,6 +76,23 @@ class Step(models.Model):
     speed_units = models.CharField(max_length=3,choices=SPEED_UNITS_CHOICES,default='  g')
     temperature = models.FloatField(default=23)
     temperature_units = models.CharField(max_length=4,choices=TEMPERATURE_UNITS_CHOICES,default='C')
+    # DECANT 
+    action = models.CharField(default=7,choices=DECANT_ACTION_CHOICES)
+    # THERMOCYCLE
+    # (none,iterable)
+    # RESUSPEND 
+    #action = models.CharField(default=7,choices=DECANT_ACTION_CHOICES)
+    # reagnets,filler,total
+    # TRANSFER 
+    #container
+    # OPERATE
+    # (none,iterable)
+
+
+class OperateStep(models.Model):
+
+    step = models.ForeignKey(Step, on_delete=models.CASCADE,default=None)
+    description = models.CharField(max_length=255)
     
 
 class ThermocycleStep(models.Model):

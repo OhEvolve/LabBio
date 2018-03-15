@@ -2,10 +2,20 @@
 # source: https://stackoverflow.com/questions/47838059/django-admin-show-hide-fields-if-specific-value-is-selected-in-a-dropdown/47840995#47840995
 
 from django.contrib import admin
-from protocols.models import Step,Protocol,ThermocycleStep
-from protocols.forms import ProtocolForm,StepForm,ThermocycleForm
+from protocols.models import Step,Protocol,OperateStep,ThermocycleStep
+from protocols.forms import ProtocolForm,StepForm,OperateForm,ThermocycleForm
 from nested_admin import NestedStackedInline,NestedModelAdmin
 
+
+class OperateInline(NestedStackedInline):
+
+    """ """ 
+
+    fields = ('description',)
+
+    form = OperateForm
+    model = OperateStep 
+    extra = 1
 
 class ThermocycleInline(NestedStackedInline):
 
@@ -27,7 +37,7 @@ class StepInline(NestedStackedInline):
     model = Step
     extra = 1
 
-    inlines = [ThermocycleInline]
+    inlines = [ThermocycleInline,OperateInline]
 
     class Media:
         js = ('protocols/js/steps.js',)

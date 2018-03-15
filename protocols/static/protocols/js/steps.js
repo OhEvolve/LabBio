@@ -24,7 +24,7 @@
             entryTemplate = '#step_set-{} .field-{}',
 
             // special field hiding
-            nested_fieldDict = {'Thermocycle': ['thermocycle']},
+            nested_fieldDict = {'Thermocycle': ['thermocycle'],'Operate':['operate']},
             nestedTemplate = '#step_set-{}-{}step_set-group'
 
             total = $('#id_step_set-TOTAL_FORMS'),
