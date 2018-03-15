@@ -21,7 +21,8 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-            path('admin/', admin.site.urls),
+            path('admin/', admin.site.urls),#admin.site.urls),
+            path('nested_admin/', include('nested_admin.urls')),#admin.site.urls),
             path('', include('home.urls')),
             path('reagents/', include('reagents.urls'))
               ]

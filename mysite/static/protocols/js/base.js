@@ -7,7 +7,6 @@
 
         function toggleVerified(value) {
             if (value === 'Custom') {
-                console.log("here");
                 console.log("A");
                 verified.show();
             } else {

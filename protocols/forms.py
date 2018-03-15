@@ -1,7 +1,8 @@
 
+from django.utils.translation import ugettext_lazy as _
 
 from django import forms
-from protocols.models import Step,Protocol 
+from protocols.models import Step,Protocol,ThermocycleStep
 
 class ProtocolForm(forms.ModelForm):
 
@@ -17,7 +18,14 @@ class StepForm(forms.ModelForm):
 
     class Meta:
         model = Step 
-        fields = ('date_range',)
+        fields = ('name',)
         widgets = {
-            'date_range': forms.Select(choices=Step.CHOICES)
+            'name': forms.Select(choices=Step.CHOICES)
         }
+
+class ThermocycleForm(forms.ModelForm):
+
+    class Meta:
+        model = ThermocycleStep 
+        fields = ('stage_type','goto_step','repeats','stage_temp','stage_temp_units','stage_time','stage_time_units')
+
