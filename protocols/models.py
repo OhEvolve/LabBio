@@ -3,6 +3,8 @@
 from datetime import date
 from django.db import models
 
+from reagents.models import Liquid
+
 
 TIME_UNITS_CHOICES = (("  s","s"),
                       ("min","min"),
@@ -19,7 +21,8 @@ VOLUME_UNITS_CHOICES = (("uL","uL"),
                         ("mL","mL"),
                         (" L"," L"))
 
-DECANT_ACTION_CHOICES = (('Discard','Discard'),
+DECANT_ACTION_CHOICES = (('-------','-----'),
+                         ('Discard','Discard'),
                          ('  Save ','Save'))
 
 class Protocol(models.Model):
@@ -77,14 +80,14 @@ class Step(models.Model):
     temperature = models.FloatField(default=23)
     temperature_units = models.CharField(max_length=4,choices=TEMPERATURE_UNITS_CHOICES,default='C')
     # DECANT 
-    action = models.CharField(default=7,choices=DECANT_ACTION_CHOICES)
+    action = models.CharField(default='-------',max_length=7,choices=DECANT_ACTION_CHOICES)
     # THERMOCYCLE
     # (none,iterable)
     # RESUSPEND 
-    #action = models.CharField(default=7,choices=DECANT_ACTION_CHOICES)
+    filler = models.ManyToManyField(Liquid,symmetrical=False)
     # reagnets,filler,total
     # TRANSFER 
-    #container
+    container = models.CharField(default='1.5mL Tube',max_length=30)
     # OPERATE
     # (none,iterable)
 

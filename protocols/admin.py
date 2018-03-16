@@ -31,7 +31,7 @@ class StepInline(NestedStackedInline):
 
     """ """ 
 
-    fields = ('name',('preamble','postamble'),'reagents',('temperature','temperature_units'),('time','time_units'),('speed','speed_units'))
+    fields = ('name',('preamble','postamble'),'reagents',('temperature','temperature_units'),('time','time_units'),('speed','speed_units'),'container','action','filler')
 
     form = StepForm
     model = Step

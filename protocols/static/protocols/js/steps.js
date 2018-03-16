@@ -20,7 +20,12 @@
             fieldDict = {'Mix': ['reagents','temperature','temperature_units'],
                          'Incubate': ['time','time_units','temperature','temperature_units'],
                          'Centrifuge': ['speed','speed_units','temperature','temperature_units'],
-                         'Thermocycle':['']},
+                         'Decant':['action'],
+                         'Thermocycle':[''],
+                         'Resuspend':['filler'],
+                         'Transfer':['container'],
+                         'Operate':['']};
+
             entryTemplate = '#step_set-{} .field-{}',
 
             // special field hiding
