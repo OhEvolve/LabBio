@@ -29,8 +29,8 @@
             entryTemplate = '#step_set-{} .field-{}',
 
             // special field hiding
-            nested_fieldDict = {'Thermocycle': ['thermocycle'],'Operate':['operate']},
-            nestedTemplate = '#step_set-{}-{}step_set-group'
+            nested_fieldDict = {'Thermocycle': ['thermocyclestep'],'Operate':['operatestep'],'Mix':['addedliquid','addedsolid','addedbiologic']},
+            nestedTemplate = '#step_set-{}-{}_set-group'
 
             total = $('#id_step_set-TOTAL_FORMS'),
             fixed_total = 5;
@@ -77,6 +77,13 @@
             var rows = total.val() - 1;
             toggleFields(rows,$(stepTemplate.format(rows)).val());
             $(stepTemplate.format(rows)).change(callback(stepTemplate,rows));
+        });
+
+        $(document).on('formset:removed', function(a,b,c) {
+            for (i = 0; i < total.val(); i++) {
+                toggleFields(i,$(stepTemplate.format(i)).val());
+                $(stepTemplate.format(i)).change(callback(stepTemplate,i));
+            };
         });
 
     });

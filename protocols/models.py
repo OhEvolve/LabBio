@@ -3,7 +3,7 @@
 from datetime import date
 from django.db import models
 
-from reagents.models import Liquid
+from reagents.models import Liquid,Solid,Biologic
 
 
 TIME_UNITS_CHOICES = (("  s","s"),
@@ -24,6 +24,20 @@ VOLUME_UNITS_CHOICES = (("uL","uL"),
 DECANT_ACTION_CHOICES = (('-------','-----'),
                          ('Discard','Discard'),
                          ('  Save ','Save'))
+
+VOLUME_UNITS_CHOICES = (("uL","uL"),
+                        ("mL","mL"),
+                        (" L"," L"))
+
+
+MASS_UNITS_CHOICES = (("ng/L","ng/L"),
+                      ("ug/L","ug/L"),
+                      ("mg/L","mg/L"),
+                      (" g/L"," g/L"),
+                      (" nM "," nM "),
+                      (" uM "," uM "),
+                      (" mM "," mM "),
+                      ("  M ","  M "))
 
 class Protocol(models.Model):
 
@@ -84,7 +98,9 @@ class Step(models.Model):
     # THERMOCYCLE
     # (none,iterable)
     # RESUSPEND 
-    filler = models.ManyToManyField(Liquid,symmetrical=False)
+    liquids   = models.ManyToManyField(Liquid,through='AddedLiquid',symmetrical=False)
+    solids    = models.ManyToManyField(Solid,through='AddedSolid',symmetrical=False)
+    biologics = models.ManyToManyField(Biologic,through='AddedBiologic',symmetrical=False)
     # reagnets,filler,total
     # TRANSFER 
     container = models.CharField(default='1.5mL Tube',max_length=30)
@@ -115,6 +131,27 @@ class ThermocycleStep(models.Model):
     stage_temp_units = models.CharField(max_length=4,choices=TEMPERATURE_UNITS_CHOICES,default='C')
     stage_time = models.FloatField(default=1)
     stage_time_units = models.CharField(max_length=3,choices=TIME_UNITS_CHOICES,default='min')
+
+""" Reagent listing through models """
+
+
+class AddedLiquid(models.Model):
+    reagent  = models.ForeignKey(Liquid,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    step = models.ForeignKey(Step,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    volume       = models.FloatField(default=1)
+    volume_units = models.CharField(max_length=2,choices=VOLUME_UNITS_CHOICES,default=' L')
+
+class AddedSolid(models.Model):
+    reagent  = models.ForeignKey(Solid,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    step = models.ForeignKey(Step,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    mass       = models.FloatField(default=0)
+    mass_units = models.CharField(max_length=4,choices=MASS_UNITS_CHOICES,default=' g/L')
+            
+class AddedBiologic(models.Model):
+    reagent  = models.ForeignKey(Biologic,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    step = models.ForeignKey(Step,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    mass       = models.FloatField(default=0)
+    mass_units = models.CharField(max_length=4,choices=MASS_UNITS_CHOICES,default=' g/L')
 
 
 

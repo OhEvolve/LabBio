@@ -4,7 +4,8 @@
 from django.contrib import admin
 from protocols.models import Step,Protocol,OperateStep,ThermocycleStep
 from protocols.forms import ProtocolForm,StepForm,OperateForm,ThermocycleForm
-from nested_admin import NestedStackedInline,NestedModelAdmin
+from nested_admin import NestedStackedInline,NestedTabularInline,NestedModelAdmin
+from .models import Step
 
 
 class OperateInline(NestedStackedInline):
@@ -27,17 +28,41 @@ class ThermocycleInline(NestedStackedInline):
     model = ThermocycleStep 
     extra = 1
 
+""" Liquid Content """
+class LiquidContentInlineAdmin(NestedTabularInline):
+    model = Step.liquids.through
+    extra,min_num = 0,1 
+    #fk_name = 'liquid_to_solution'
+
+""" Solid Content """
+class SolidContentInlineAdmin(NestedTabularInline):
+    model = Step.solids.through
+    extra,min_num = 1,0 
+    #fk_name = 'solid_to_solution'
+
+""" Biologic Content """
+class BiologicContentInlineAdmin(NestedTabularInline):
+    model = Step.biologics.through
+    extra,min_num = 1,0 
+    #fk_name = 'biologic_to_solution'
+
 class StepInline(NestedStackedInline):
 
     """ """ 
 
-    fields = ('name',('preamble','postamble'),'reagents',('temperature','temperature_units'),('time','time_units'),('speed','speed_units'),'container','action','filler')
+    fields = ('name',('preamble','postamble'),'reagents',('temperature','temperature_units'),('time','time_units'),('speed','speed_units'),'container','action')
 
     form = StepForm
     model = Step
     extra = 1
 
-    inlines = [ThermocycleInline,OperateInline]
+    inlines = [
+            ThermocycleInline,
+            OperateInline,
+            LiquidContentInlineAdmin,
+            SolidContentInlineAdmin,
+            BiologicContentInlineAdmin
+            ]
 
     class Media:
         js = ('protocols/js/steps.js',)
@@ -60,6 +85,7 @@ class ProtocolAdmin(NestedModelAdmin):
 
     class Media:
         js = ('protocols/js/base.js',)
+
 
 admin.site.register(Protocol,ProtocolAdmin)
 
