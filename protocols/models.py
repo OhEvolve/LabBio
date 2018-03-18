@@ -53,8 +53,6 @@ class Protocol(models.Model):
         ('Opr', 'Operate'))
 
     date_range = models.CharField(max_length=15,default='',null=True)
-    start_date = models.DateField(default=date.today)
-    end_date = models.DateField(default=date.today)
 
 
 class Step(models.Model):
@@ -80,7 +78,6 @@ class Step(models.Model):
     postamble   = models.CharField(max_length=20,default='')
     # step features
     # MIX
-    reagents = models.CharField(max_length=15,default='',null=True)
     temperature = models.CharField(max_length=15,default='',null=True)
     temperature_units = models.CharField(max_length=4,choices=TEMPERATURE_UNITS_CHOICES,default='C')
     # INCUBATE
