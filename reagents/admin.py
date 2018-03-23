@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 
-from .models import Liquid,Solid,Biologic,Solution
+from .models import Liquid,Solid,Biologic,Cell,Solution
 
 
 
@@ -42,6 +42,20 @@ class BiologicContentInlineAdmin(admin.TabularInline):
     extra,min_num = 1,0 
     #fk_name = 'biologic_to_solution'
 
+""" Cell-Biologic Content """
+class CellBiologicContentInlineAdmin(admin.TabularInline):
+    model = Cell.biologics.through
+    extra,min_num = 1,0 
+    #fk_name = 'biologic_to_solution'
+
+
+class CellAdmin(admin.ModelAdmin):
+
+    fieldsets = [
+        (None, {'fields': ['name','owner','shaken','media_preference','morphology',('doubling_time','doubling_time_units'),'culture_environment']}),
+        ]
+
+    inlines = (CellBiologicContentInlineAdmin,)
 
 class SolutionAdmin(admin.ModelAdmin):
 
@@ -53,9 +67,15 @@ class SolutionAdmin(admin.ModelAdmin):
                SolidContentInlineAdmin,
                BiologicContentInlineAdmin)
 
+
+
         
 
 admin.site.register(Liquid, 	LiquidAdmin)
 admin.site.register(Solid,       SolidAdmin)
 admin.site.register(Biologic, BiologicAdmin)
+admin.site.register(Cell,         CellAdmin)
 admin.site.register(Solution, SolutionAdmin)
+
+
+

@@ -13,7 +13,6 @@ class ProtocolForm(forms.ModelForm):
             'date_range': forms.Select(choices=Protocol.CHOICES)
         }
 
-
 class StepForm(forms.ModelForm):
 
     class Meta:

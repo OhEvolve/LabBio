@@ -46,11 +46,16 @@ class BiologicContentInlineAdmin(NestedTabularInline):
     extra,min_num = 1,0 
     #fk_name = 'biologic_to_solution'
 
+class CellContentInlineAdmin(NestedTabularInline):
+    model = Step.cells.through
+    extra,min_num = 1,0 
+    #fk_name = 'biologic_to_solution'
+
 class StepInline(NestedStackedInline):
 
     """ """ 
 
-    fields = ('name',('preamble','postamble'),'reagents',('temperature','temperature_units'),('time','time_units'),('speed','speed_units'),'container','action')
+    fields = ('name',('preamble','postamble'),('temperature','temperature_units'),('time','time_units'),('speed','speed_units'),'container','action')
 
     form = StepForm
     model = Step
@@ -61,7 +66,8 @@ class StepInline(NestedStackedInline):
             OperateInline,
             LiquidContentInlineAdmin,
             SolidContentInlineAdmin,
-            BiologicContentInlineAdmin
+            BiologicContentInlineAdmin,
+            CellContentInlineAdmin
             ]
 
     class Media:

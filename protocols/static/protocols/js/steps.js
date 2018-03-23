@@ -17,19 +17,22 @@
             stepTemplate  = '#id_step_set-{}-name';
             
             // standard field fields
-            fieldDict = {'Mix': ['reagents','temperature','temperature_units'],
+            fieldDict = {'Mix': ['temperature','temperature_units'],
                          'Incubate': ['time','time_units','temperature','temperature_units'],
                          'Centrifuge': ['speed','speed_units','temperature','temperature_units'],
                          'Decant':['action'],
                          'Thermocycle':[''],
-                         'Resuspend':['filler'],
+                         'Resuspend': ['temperature','temperature_units'],
                          'Transfer':['container'],
                          'Operate':['']};
 
             entryTemplate = '#step_set-{} .field-{}',
 
             // special field hiding
-            nested_fieldDict = {'Thermocycle': ['thermocyclestep'],'Operate':['operatestep'],'Mix':['addedliquid','addedsolid','addedbiologic']},
+            nested_fieldDict = {'Thermocycle': ['thermocyclestep'],
+                'Operate':['operatestep'],
+                'Mix':['addedliquid','addedsolid','addedbiologic','addedcell'],
+                'Resuspend':['addedliquid','addedsolid','addedbiologic','addedcell']},
             nestedTemplate = '#step_set-{}-{}_set-group'
 
             total = $('#id_step_set-TOTAL_FORMS'),

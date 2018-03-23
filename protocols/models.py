@@ -3,7 +3,7 @@
 from datetime import date
 from django.db import models
 
-from reagents.models import Liquid,Solid,Biologic
+from reagents.models import Liquid,Solid,Biologic,Cell
 
 
 TIME_UNITS_CHOICES = (("  s","s"),
@@ -42,23 +42,27 @@ MASS_UNITS_CHOICES = (("ng/L","ng/L"),
 class Protocol(models.Model):
 
     CHOICES = (
-        ('---','-----'),
-        ('Mix', 'Mix'),
-        ('Inc', 'Incubate'),
-        ('Cen', 'Centrifuge'),
-        ('Dec', 'Decant'),
-        ('Trm', 'Thermocylce'),
-        ('Rsp', 'Resuspend'),
-        ('Tns', 'Transfer'),
-        ('Opr', 'Operate'))
+        ('            Custom','Custom'),
+        ('          Miniprep','Miniprep'),
+        ('          Zymoprep','Zymoprep'),
+        ('         Transform','Transform'),
+        ('   Electroporation','Electroporation'),
+        ('      Transduction','Transduction'),
+        ('             RTPCR','RT-PCR'),
+        ('      Transciption','Transcription'),
+        ('GelElectrophoresis','Gel Electrophoresis'),
+        ('      GelExraction','Gel Extraction'),
+        ('               PCR','PCR'),
+        ('    GibsonAssembly','Gibson Assembly')
 
     date_range = models.CharField(max_length=15,default='',null=True)
+    inputs     = models.Field(max_length=15,default='',null=True)
+    outputs    = models.CharField(max_length=15,default='',null=True)
 
 
 class Step(models.Model):
 
     protocol = models.ForeignKey(Protocol, on_delete=models.CASCADE,default=None)
-
 
     CHOICES = (
         ('-----','-----'),
@@ -98,6 +102,7 @@ class Step(models.Model):
     liquids   = models.ManyToManyField(Liquid,through='AddedLiquid',symmetrical=False)
     solids    = models.ManyToManyField(Solid,through='AddedSolid',symmetrical=False)
     biologics = models.ManyToManyField(Biologic,through='AddedBiologic',symmetrical=False)
+    cells = models.ManyToManyField(Cell,through='AddedCell',symmetrical=False)
     # reagnets,filler,total
     # TRANSFER 
     container = models.CharField(default='1.5mL Tube',max_length=30)
@@ -109,7 +114,21 @@ class OperateStep(models.Model):
 
     step = models.ForeignKey(Step, on_delete=models.CASCADE,default=None)
     description = models.CharField(max_length=255)
+    _input = models.ForeignKey(Protocol, on_delete=models.CASCADE,default=None)
+    _output = models.ForeignKey(Protocol, on_delete=models.CASCADE,default=None)
     
+
+class InputProtocol(models.Model):
+
+    step = models.ForeignKey(Step, on_delete=models.CASCADE,default=None)
+    count = models.CharField(max_length=255)
+
+
+class OutputProtocol(models.Model):
+
+    step = models.ForeignKey(Step, on_delete=models.CASCADE,default=None)
+    count = models.CharField(max_length=255)
+
 
 class ThermocycleStep(models.Model):
 
@@ -150,6 +169,11 @@ class AddedBiologic(models.Model):
     mass       = models.FloatField(default=0)
     mass_units = models.CharField(max_length=4,choices=MASS_UNITS_CHOICES,default=' g/L')
 
+class AddedCell(models.Model):
+    reagent  = models.ForeignKey(Cell,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    step = models.ForeignKey(Step,on_delete=models.CASCADE) # may be wrong on_delete behavior
+    volume = models.FloatField(default=0)
+    volume_units = models.CharField(max_length=4,choices=MASS_UNITS_CHOICES,default=' g/L')
 
 
 
