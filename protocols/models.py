@@ -53,11 +53,11 @@ class Protocol(models.Model):
         ('GelElectrophoresis','Gel Electrophoresis'),
         ('      GelExraction','Gel Extraction'),
         ('               PCR','PCR'),
-        ('    GibsonAssembly','Gibson Assembly')
+        ('    GibsonAssembly','Gibson Assembly'))
 
     date_range = models.CharField(max_length=15,default='',null=True)
-    inputs     = models.Field(max_length=15,default='',null=True)
-    outputs    = models.CharField(max_length=15,default='',null=True)
+    #inputs     = models.Field(max_length=15,default='',null=True)
+    #outputs    = models.CharField(max_length=15,default='',null=True)
 
 
 class Step(models.Model):
@@ -114,20 +114,26 @@ class OperateStep(models.Model):
 
     step = models.ForeignKey(Step, on_delete=models.CASCADE,default=None)
     description = models.CharField(max_length=255)
-    _input = models.ForeignKey(Protocol, on_delete=models.CASCADE,default=None)
-    _output = models.ForeignKey(Protocol, on_delete=models.CASCADE,default=None)
+    #_input = models.ForeignKey(Protocol, on_delete=models.CASCADE,default=None)
+    #_output = models.ForeignKey(Protocol, on_delete=models.CASCADE,default=None)
     
 
-class InputProtocol(models.Model):
+class Input(models.Model):
 
-    step = models.ForeignKey(Step, on_delete=models.CASCADE,default=None)
-    count = models.CharField(max_length=255)
+    protocol = models.ForeignKey(Protocol,on_delete=models.CASCADE,default=None)
+    count = models.FloatField(max_length=255)
 
+class Output(models.Model):
 
+    protocol = models.ForeignKey(Protocol,on_delete=models.CASCADE,default=None)
+    count = models.FloatField(max_length=255)
+
+'''
 class OutputProtocol(models.Model):
 
     step = models.ForeignKey(Step, on_delete=models.CASCADE,default=None)
     count = models.CharField(max_length=255)
+'''
 
 
 class ThermocycleStep(models.Model):

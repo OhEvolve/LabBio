@@ -2,8 +2,8 @@
 # source: https://stackoverflow.com/questions/47838059/django-admin-show-hide-fields-if-specific-value-is-selected-in-a-dropdown/47840995#47840995
 
 from django.contrib import admin
-from protocols.models import Step,Protocol,OperateStep,ThermocycleStep
-from protocols.forms import ProtocolForm,StepForm,OperateForm,ThermocycleForm
+from protocols.models import Step,Protocol,OperateStep,ThermocycleStep,Input,Output
+from protocols.forms import ProtocolForm,StepForm,OperateForm,ThermocycleForm,InputForm,OutputForm
 from nested_admin import NestedStackedInline,NestedTabularInline,NestedModelAdmin
 from .models import Step
 
@@ -51,6 +51,21 @@ class CellContentInlineAdmin(NestedTabularInline):
     extra,min_num = 1,0 
     #fk_name = 'biologic_to_solution'
 
+
+class InputInline(NestedStackedInline):
+
+    fields = ('count',)
+    form = InputForm
+    model = Input
+    extra = 0
+
+class OutputInline(NestedStackedInline):
+
+    fields = ('count',)
+    form = OutputForm
+    model = Output
+    extra = 0
+
 class StepInline(NestedStackedInline):
 
     """ """ 
@@ -81,13 +96,13 @@ class ProtocolAdmin(NestedModelAdmin):
             'classes': ('predefined',)
         }),
         (None, {
-            'fields': (('start_date', 'end_date'),),
+            'fields': ((),),
             'classes': ('abcdefg',)
         })
     )
 
     form = ProtocolForm
-    inlines = [StepInline]
+    inlines = [InputInline,OutputInline,StepInline]
 
     class Media:
         js = ('protocols/js/base.js',)
