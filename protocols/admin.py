@@ -52,16 +52,14 @@ class CellContentInlineAdmin(NestedTabularInline):
     #fk_name = 'biologic_to_solution'
 
 
-class InputInline(NestedStackedInline):
+class InputInline(NestedTabularInline):
 
-    fields = ('count',)
     form = InputForm
     model = Input
     extra = 0
 
-class OutputInline(NestedStackedInline):
+class OutputInline(NestedTabularInline):
 
-    fields = ('count',)
     form = OutputForm
     model = Output
     extra = 0

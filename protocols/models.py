@@ -17,9 +17,8 @@ SPEED_UNITS_CHOICES = (("  g","  g"),
 TEMPERATURE_UNITS_CHOICES = (("C","C"),
                              ("F","F"))
 
-VOLUME_UNITS_CHOICES = (("uL","uL"),
-                        ("mL","mL"),
-                        (" L"," L"))
+INPUT_CHOICES = (('Sample','Sample'),
+                 ('R.Enzy','Restriction Enzyme'))
 
 DECANT_ACTION_CHOICES = (('-------','-----'),
                          ('Discard','Discard'),
@@ -56,8 +55,6 @@ class Protocol(models.Model):
         ('    GibsonAssembly','Gibson Assembly'))
 
     date_range = models.CharField(max_length=15,default='',null=True)
-    #inputs     = models.Field(max_length=15,default='',null=True)
-    #outputs    = models.CharField(max_length=15,default='',null=True)
 
 
 class Step(models.Model):
@@ -121,12 +118,16 @@ class OperateStep(models.Model):
 class Input(models.Model):
 
     protocol = models.ForeignKey(Protocol,on_delete=models.CASCADE,default=None)
-    count = models.FloatField(max_length=255)
+    input_type = models.CharField(max_length=30,choices=INPUT_CHOICES,default='-----')
+    minimum_entries = models.IntegerField(default=1)
+    maximum_entries = models.IntegerField(default=1)
 
 class Output(models.Model):
 
     protocol = models.ForeignKey(Protocol,on_delete=models.CASCADE,default=None)
-    count = models.FloatField(max_length=255)
+    output_type = models.CharField(max_length=30,choices=INPUT_CHOICES,default='-----')
+    minimum_entries = models.IntegerField(default=1)
+    maximum_entries = models.IntegerField(default=1)
 
 '''
 class OutputProtocol(models.Model):

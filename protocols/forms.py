@@ -26,13 +26,13 @@ class InputForm(forms.ModelForm):
 
     class Meta:
         model = Input
-        fields = ('type','maximum')
+        fields = ('input_type','minimum_entries','maximum_entries')
 
 class OutputForm(forms.ModelForm):
 
     class Meta:
         model = Output
-        fields = ('type','maximum')
+        fields = ('output_type','minimum_entries','maximum_entries')
 
 class ThermocycleForm(forms.ModelForm):
 
