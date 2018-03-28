@@ -8,9 +8,9 @@ class ProtocolForm(forms.ModelForm):
 
     class Meta:
         model = Protocol 
-        fields = ('date_range',)
+        fields = ('IO_template',)
         widgets = {
-            'date_range': forms.Select(choices=Protocol.CHOICES)
+            'IO_template': forms.Select(choices=Protocol.CHOICES)
         }
 
 class StepForm(forms.ModelForm):

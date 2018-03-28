@@ -1,16 +1,20 @@
 
 (function($) {
     $(function() {
-        var selectField = $('#id_date_range'),
-            verified = $('.abcdefg');
 
+        var selectField = $('#id_IO_template'),
+
+            input_id = $('#input_set-group');
+            output_id = $('#output_set-group');
 
         function toggleVerified(value) {
+            console.log(value)
             if (value === 'Custom') {
-                console.log("A");
-                verified.show();
+                input_id.show();
+                output_id.show();
             } else {
-                verified.hide();
+                input_id.hide();
+                output_id.hide();
             }
         }
 

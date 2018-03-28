@@ -16,7 +16,7 @@ class OperateInline(NestedStackedInline):
 
     form = OperateForm
     model = OperateStep 
-    extra = 1
+    extra = 0
 
 class ThermocycleInline(NestedStackedInline):
 
@@ -26,29 +26,29 @@ class ThermocycleInline(NestedStackedInline):
 
     form = ThermocycleForm
     model = ThermocycleStep 
-    extra = 1
+    extra = 0
 
 """ Liquid Content """
 class LiquidContentInlineAdmin(NestedTabularInline):
     model = Step.liquids.through
-    extra,min_num = 0,1 
+    extra,min_num = 0,0 
     #fk_name = 'liquid_to_solution'
 
 """ Solid Content """
 class SolidContentInlineAdmin(NestedTabularInline):
     model = Step.solids.through
-    extra,min_num = 1,0 
+    extra,min_num = 0,0 
     #fk_name = 'solid_to_solution'
 
 """ Biologic Content """
 class BiologicContentInlineAdmin(NestedTabularInline):
     model = Step.biologics.through
-    extra,min_num = 1,0 
+    extra,min_num = 0,0 
     #fk_name = 'biologic_to_solution'
 
 class CellContentInlineAdmin(NestedTabularInline):
     model = Step.cells.through
-    extra,min_num = 1,0 
+    extra,min_num = 0,0 
     #fk_name = 'biologic_to_solution'
 
 
@@ -68,7 +68,7 @@ class StepInline(NestedStackedInline):
 
     """ """ 
 
-    fields = ('name',('preamble','postamble'),('temperature','temperature_units'),('time','time_units'),('speed','speed_units'),'container','action')
+    fields = (('name','defined_through_inputs'),('preamble','postamble'),('temperature','temperature_units'),('time','time_units'),('speed','speed_units'),'container','action')
 
     form = StepForm
     model = Step
@@ -89,8 +89,8 @@ class StepInline(NestedStackedInline):
 class ProtocolAdmin(NestedModelAdmin):
 
     fieldsets = (
-        ('Date Range', {
-            'fields': ('date_range',),
+        ('Overview', {
+            'fields': ('IO_template',),
             'classes': ('predefined',)
         }),
         (None, {

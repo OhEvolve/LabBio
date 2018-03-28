@@ -41,20 +41,20 @@ MASS_UNITS_CHOICES = (("ng/L","ng/L"),
 class Protocol(models.Model):
 
     CHOICES = (
-        ('            Custom','Custom'),
-        ('          Miniprep','Miniprep'),
-        ('          Zymoprep','Zymoprep'),
-        ('         Transform','Transform'),
-        ('   Electroporation','Electroporation'),
-        ('      Transduction','Transduction'),
-        ('             RTPCR','RT-PCR'),
-        ('      Transciption','Transcription'),
+        ('Custom','Custom'),
+        ('Miniprep','Miniprep'),
+        ('Zymoprep','Zymoprep'),
+        ('Transform','Transform'),
+        ('Electroporation','Electroporation'),
+        ('Transduction','Transduction'),
+        ('RTPCR','RT-PCR'),
+        ('Transciption','Transcription'),
         ('GelElectrophoresis','Gel Electrophoresis'),
-        ('      GelExraction','Gel Extraction'),
-        ('               PCR','PCR'),
-        ('    GibsonAssembly','Gibson Assembly'))
+        ('GelExraction','Gel Extraction'),
+        ('PCR','PCR'),
+        ('GibsonAssembly','Gibson Assembly'))
 
-    date_range = models.CharField(max_length=15,default='',null=True)
+    IO_template = models.CharField(max_length=15,default='',null=True)
 
 
 class Step(models.Model):
@@ -75,6 +75,7 @@ class Step(models.Model):
 
     # common features
     name        = models.CharField(max_length=255,choices=CHOICES,default='-----')
+    defined_through_inputs = models.BooleanField(default=False)
     preamble    = models.CharField(max_length=20,default='')
     postamble   = models.CharField(max_length=20,default='')
     # step features
